@@ -14,8 +14,11 @@ local Window = Fluent:CreateWindow({
 
 --Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Main = Window:AddTab({ Title = "Main", Icon = "app-window" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Murderer = Window:AddTab({ Title = "Murderer", Icon = "utensils" }),
+    Sheriff = Window:AddTab({ Title = "Sheriff", Icon = "target" ]),
+    Farm = Window:AddTab({ Title = "Farms", Icon = "tractor" ]),
 }
 
 local Options = Fluent.Options
@@ -35,10 +38,83 @@ do
         Content = "This is a MM2 Script..\nUse this on an alt. please."
     })
 
+    Tabs.Main:AddButton({
+        Title = "Infinite Yield",
+        Description = "Loads Infinite Yield",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are you sure?",
+                Content = "Load infinite yield",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            loadstring(game:HttpGet"https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source")()
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
+    })
 
+     Tabs.Main:AddButton({
+        Title = "Eclispe Hub",
+        Description = "Loads Eclispe Hub",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are you sure?",
+                Content = "Load?",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            loadstring(game:HttpGet"https://raw.githubusercontent.com/dadnsjdhajwhdjsd/Hack/refs/heads/main/src/eclipse%20but%20better.lua")()
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
+    })
 
     Tabs.Main:AddButton({
-        Title = "Test",
+        Title = "Nexus Hub",
+        Description = "Loads",
+        Callback = function()
+            Window:Dialog({
+                Title = "Are you sure?",
+                Content = "Pick lol",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            loadstring(game:HttpGet"https://raw.githubusercontent.com/vexroxd/My-Script-/refs/heads/main/MM2-Candy-Farm")()
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    Tabs.Main:AddButton({
+        Title = "",
         Description = "Very important button",
         Callback = function()
             Window:Dialog({
