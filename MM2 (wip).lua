@@ -111,7 +111,7 @@ do
     })
 
     Tabs.Main:AddButton({
-        Title = "",
+        Title = "Test",
         Description = "Very important button",
         Callback = function()
             Window:Dialog({
