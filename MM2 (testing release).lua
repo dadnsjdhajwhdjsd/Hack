@@ -15,6 +15,9 @@ local Window = Fluent:CreateWindow({
 -- Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "app-window" }),
+    Farm = Window:AddTab({ Title = "Farm", Icon = "tractor" }),  -- Changed the "Farm" tab icon to "tractor"
+    Murderer = Window:AddTab({ Title = "Murderer", Icon = "pocket-knife" }),  -- Added Murderer tab with icon
+    Sheriff = Window:AddTab({ Title = "Sheriff", Icon = "user-round" }),  -- Added Sheriff tab with icon
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
@@ -85,118 +88,49 @@ Tabs.Main:AddButton({
     end
 })
 
-Tabs.Main:AddButton({
-    Title = "Nexus Hub",
-    Description = "Loads Nexus Hub",
+-- Murderer Tab: Kill Everyone Button
+Tabs.Murderer:AddButton({
+    Title = "Kill Everyone",
+    Description = "Teleport to every player and kill them.",
     Callback = function()
-        Window:Dialog({
-            Title = "Are you sure?",
-            Content = "Pick lol",
-            Buttons = {
-                {
-                    Title = "Confirm",
-                    Callback = function()
-                        loadstring(game:HttpGet("https://raw.githubusercontent.com/vexroxd/My-Script-/refs/heads/main/MM2-Candy-Farm"))()
+        for _, player in pairs(game.Players:GetPlayers()) do
+            if player ~= game.Players.LocalPlayer then  -- Don't teleport to yourself
+                -- Teleport to the player
+                local character = player.Character
+                if character and character:FindFirstChild("HumanoidRootPart") then
+                    -- Teleport to the player's HumanoidRootPart
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame
+                    wait(0.2)  -- Short wait to ensure teleportation happens before the next action
+
+                    -- Equip the knife (slot 1)
+                    local backpack = game.Players.LocalPlayer.Backpack
+                    local knife = backpack:FindFirstChildOfClass("Tool")
+                    if knife then
+                        knife.Parent = backpack
                     end
-                },
-                {
-                    Title = "Cancel",
-                    Callback = function()
-                        print("Cancelled the dialog.")
+
+                    -- Kill the player (set health to 0)
+                    local humanoid = character:FindFirstChildOfClass("Humanoid")
+                    if humanoid then
+                        humanoid.Health = 0
                     end
-                }
-            }
-        })
+                end
+            end
+        end
     end
 })
 
--- Toggle Button example
-local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
-Toggle:OnChanged(function()
-    print("Toggle changed:", Toggle.Value)
-end)
-
--- Slider
-local Slider = Tabs.Main:AddSlider("Slider", {
-    Title = "Slider",
-    Description = "This is a slider",
-    Default = 2,
-    Min = 0,
-    Max = 5,
-    Rounding = 1,
-    Callback = function(Value)
-        print("Slider changed:", Value)
-    end
-})
-Slider:SetValue(3)
-
--- Dropdown (Single selection)
-local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
-    Title = "Dropdown",
-    Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-    Multi = false,
-    Default = 1,
-})
-
-Dropdown:SetValue("four")
-Dropdown:OnChanged(function(Value)
-    print("Dropdown changed:", Value)
-end)
-
--- MultiDropdown (Multiple selections)
-local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
-    Title = "Dropdown (Multiple)",
-    Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-    Multi = true,
-    Default = {"seven", "twelve"},
-})
-
-MultiDropdown:SetValue({"seven", "twelve"})
-MultiDropdown:OnChanged(function(Value)
-    local Values = {}
-    for _, Value in pairs(Value) do
-        table.insert(Values, Value)
-    end
-    print("MultiDropdown changed:", table.concat(Values, ", "))
-end)
-
--- Color Picker
-local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
-    Title = "Colorpicker",
-    Default = Color3.fromRGB(96, 205, 255)
-})
-Colorpicker:OnChanged(function()
-    print("Colorpicker changed:", Colorpicker.Value)
-end)
-
--- Keybind Example
-local Keybind = Tabs.Main:AddKeybind("Keybind", {
-    Title = "KeyBind",
-    Mode = "Toggle",  -- Always, Toggle, Hold
-    Default = "LeftControl",
-    Callback = function(Value)
-        print("Keybind clicked:", Value)
-    end,
-    ChangedCallback = function(New)
-        print("Keybind changed:", New)
-    end
-})
-
-Keybind:OnClick(function()
-    print("Keybind clicked:", Keybind:GetState())
-end)
-
-Keybind:SetValue("MB2", "Toggle")  -- Sets keybind to MB2, mode to Hold
-
--- Input Field Example
-local Input = Tabs.Main:AddInput("Input", {
-    Title = "Input",
-    Default = "Default",
-    Placeholder = "Placeholder",
-    Numeric = false,  -- Only allows numbers
-    Finished = false,  -- Only calls callback when you press enter
-    Callback = function(Value)
-        print("Input changed:", Value)
+-- Sheriff Tab (Can add functionality as needed)
+Tabs.Sheriff:AddButton({
+    Title = "Equip Gun",
+    Description = "Equip the sheriff's gun.",
+    Callback = function()
+        -- Functionality to equip the gun if needed (similar to the knife function above)
+        local backpack = game.Players.LocalPlayer.Backpack
+        local gun = backpack:FindFirstChild("SheriffGun")
+        if gun then
+            gun.Parent = backpack
+        end
     end
 })
 
