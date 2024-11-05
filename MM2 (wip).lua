@@ -16,9 +16,6 @@ local Window = Fluent:CreateWindow({
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "app-window" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
-    Murderer = Window:AddTab({ Title = "Murderer", Icon = "utensils" }),
-    Sheriff = Window:AddTab({ Title = "Sheriff", Icon = "target" ]),
-    Farm = Window:AddTab({ Title = "Farms", Icon = "tractor" ]),
 }
 
 local Options = Fluent.Options
