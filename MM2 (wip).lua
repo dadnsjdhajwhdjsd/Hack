@@ -7,12 +7,12 @@ local Window = Fluent:CreateWindow({
     SubTitle = "by aurora",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
-    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+    Acrylic = true,  -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+    MinimizeKey = Enum.KeyCode.LeftControl
 })
 
---Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+-- Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "app-window" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
@@ -20,305 +20,197 @@ local Tabs = {
 
 local Options = Fluent.Options
 
-do
-    Fluent:Notify({
-        Title = "You have loaded successfully",
-        Content = "Go have fun.",
-        SubContent = "gooo", -- Optional
-        Duration = 5 -- Set to nil to make the notification not disappear
-    })
+-- Notification at the start
+Fluent:Notify({
+    Title = "You have loaded successfully",
+    Content = "Go have fun.",
+    SubContent = "gooo",  -- Optional
+    Duration = 5  -- Set to nil to make the notification not disappear
+})
 
+-- Main Tab Content
+Tabs.Main:AddParagraph({
+    Title = "MM2 Script",
+    Content = "This is a MM2 Script..\nUse this on an alt. please."
+})
 
-
-    Tabs.Main:AddParagraph({
-        Title = "MM2 Script",
-        Content = "This is a MM2 Script..\nUse this on an alt. please."
-    })
-
-    Tabs.Main:AddButton({
-        Title = "Infinite Yield",
-        Description = "Loads Infinite Yield",
-        Callback = function()
-            Window:Dialog({
-                Title = "Are you sure?",
-                Content = "Load infinite yield",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            loadstring(game:HttpGet"https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source")()
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
+-- Add Buttons with Dialogs
+Tabs.Main:AddButton({
+    Title = "Infinite Yield",
+    Description = "Loads Infinite Yield",
+    Callback = function()
+        Window:Dialog({
+            Title = "Are you sure?",
+            Content = "Load infinite yield",
+            Buttons = {
+                {
+                    Title = "Confirm",
+                    Callback = function()
+                        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+                    end
+                },
+                {
+                    Title = "Cancel",
+                    Callback = function()
+                        print("Cancelled the dialog.")
+                    end
                 }
-            })
-        end
-    })
+            }
+        })
+    end
+})
 
-     Tabs.Main:AddButton({
-        Title = "Eclispe Hub",
-        Description = "Loads Eclispe Hub",
-        Callback = function()
-            Window:Dialog({
-                Title = "Are you sure?",
-                Content = "Load?",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            loadstring(game:HttpGet"https://raw.githubusercontent.com/dadnsjdhajwhdjsd/Hack/refs/heads/main/src/eclipse%20but%20better.lua")()
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
+Tabs.Main:AddButton({
+    Title = "Eclispe Hub",
+    Description = "Loads Eclispe Hub",
+    Callback = function()
+        Window:Dialog({
+            Title = "Are you sure?",
+            Content = "Load?",
+            Buttons = {
+                {
+                    Title = "Confirm",
+                    Callback = function()
+                        loadstring(game:HttpGet("https://raw.githubusercontent.com/dadnsjdhajwhdjsd/Hack/refs/heads/main/src/eclipse%20but%20better.lua"))()
+                    end
+                },
+                {
+                    Title = "Cancel",
+                    Callback = function()
+                        print("Cancelled the dialog.")
+                    end
                 }
-            })
-        end
-    })
+            }
+        })
+    end
+})
 
-    Tabs.Main:AddButton({
-        Title = "Nexus Hub",
-        Description = "Loads",
-        Callback = function()
-            Window:Dialog({
-                Title = "Are you sure?",
-                Content = "Pick lol",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            loadstring(game:HttpGet"https://raw.githubusercontent.com/vexroxd/My-Script-/refs/heads/main/MM2-Candy-Farm")()
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
+Tabs.Main:AddButton({
+    Title = "Nexus Hub",
+    Description = "Loads Nexus Hub",
+    Callback = function()
+        Window:Dialog({
+            Title = "Are you sure?",
+            Content = "Pick lol",
+            Buttons = {
+                {
+                    Title = "Confirm",
+                    Callback = function()
+                        loadstring(game:HttpGet("https://raw.githubusercontent.com/vexroxd/My-Script-/refs/heads/main/MM2-Candy-Farm"))()
+                    end
+                },
+                {
+                    Title = "Cancel",
+                    Callback = function()
+                        print("Cancelled the dialog.")
+                    end
                 }
-            })
-        end
-    })
+            }
+        })
+    end
+})
 
-    Tabs.Main:AddButton({
-        Title = "Test",
-        Description = "Very important button",
-        Callback = function()
-            Window:Dialog({
-                Title = "Title",
-                Content = "This is a dialog",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            print("Confirmed the dialog.")
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
-                }
-            })
-        end
-    })
+-- Toggle Button example
+local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+Toggle:OnChanged(function()
+    print("Toggle changed:", Toggle.Value)
+end)
 
-
-
-    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
-
-    Toggle:OnChanged(function()
-        print("Toggle changed:", Options.MyToggle.Value)
-    end)
-
-    Options.MyToggle:SetValue(false)
-
-
-    
-    local Slider = Tabs.Main:AddSlider("Slider", {
-        Title = "Slider",
-        Description = "This is a slider",
-        Default = 2,
-        Min = 0,
-        Max = 5,
-        Rounding = 1,
-        Callback = function(Value)
-            print("Slider was changed:", Value)
-        end
-    })
-
-    Slider:OnChanged(function(Value)
+-- Slider
+local Slider = Tabs.Main:AddSlider("Slider", {
+    Title = "Slider",
+    Description = "This is a slider",
+    Default = 2,
+    Min = 0,
+    Max = 5,
+    Rounding = 1,
+    Callback = function(Value)
         print("Slider changed:", Value)
-    end)
+    end
+})
+Slider:SetValue(3)
 
-    Slider:SetValue(3)
+-- Dropdown (Single selection)
+local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+    Title = "Dropdown",
+    Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+    Multi = false,
+    Default = 1,
+})
 
+Dropdown:SetValue("four")
+Dropdown:OnChanged(function(Value)
+    print("Dropdown changed:", Value)
+end)
 
+-- MultiDropdown (Multiple selections)
+local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
+    Title = "Dropdown (Multiple)",
+    Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+    Multi = true,
+    Default = {"seven", "twelve"},
+})
 
-    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
-        Title = "Dropdown",
-        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-        Multi = false,
-        Default = 1,
-    })
+MultiDropdown:SetValue({"seven", "twelve"})
+MultiDropdown:OnChanged(function(Value)
+    local Values = {}
+    for _, Value in pairs(Value) do
+        table.insert(Values, Value)
+    end
+    print("MultiDropdown changed:", table.concat(Values, ", "))
+end)
 
-    Dropdown:SetValue("four")
+-- Color Picker
+local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
+    Title = "Colorpicker",
+    Default = Color3.fromRGB(96, 205, 255)
+})
+Colorpicker:OnChanged(function()
+    print("Colorpicker changed:", Colorpicker.Value)
+end)
 
-    Dropdown:OnChanged(function(Value)
-        print("Dropdown changed:", Value)
-    end)
+-- Keybind Example
+local Keybind = Tabs.Main:AddKeybind("Keybind", {
+    Title = "KeyBind",
+    Mode = "Toggle",  -- Always, Toggle, Hold
+    Default = "LeftControl",
+    Callback = function(Value)
+        print("Keybind clicked:", Value)
+    end,
+    ChangedCallback = function(New)
+        print("Keybind changed:", New)
+    end
+})
 
+Keybind:OnClick(function()
+    print("Keybind clicked:", Keybind:GetState())
+end)
 
-    
-    local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
-        Title = "Dropdown",
-        Description = "You can select multiple values.",
-        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-        Multi = true,
-        Default = {"seven", "twelve"},
-    })
+Keybind:SetValue("MB2", "Toggle")  -- Sets keybind to MB2, mode to Hold
 
-    MultiDropdown:SetValue({
-        three = true,
-        five = true,
-        seven = false
-    })
+-- Input Field Example
+local Input = Tabs.Main:AddInput("Input", {
+    Title = "Input",
+    Default = "Default",
+    Placeholder = "Placeholder",
+    Numeric = false,  -- Only allows numbers
+    Finished = false,  -- Only calls callback when you press enter
+    Callback = function(Value)
+        print("Input changed:", Value)
+    end
+})
 
-    MultiDropdown:OnChanged(function(Value)
-        local Values = {}
-        for Value, State in next, Value do
-            table.insert(Values, Value)
-        end
-        print("Mutlidropdown changed:", table.concat(Values, ", "))
-    end)
-
-
-
-    local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
-        Title = "Colorpicker",
-        Default = Color3.fromRGB(96, 205, 255)
-    })
-
-    Colorpicker:OnChanged(function()
-        print("Colorpicker changed:", Colorpicker.Value)
-    end)
-    
-    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
-
-
-
-    local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
-        Title = "Colorpicker",
-        Description = "but you can change the transparency.",
-        Transparency = 0,
-        Default = Color3.fromRGB(96, 205, 255)
-    })
-
-    TColorpicker:OnChanged(function()
-        print(
-            "TColorpicker changed:", TColorpicker.Value,
-            "Transparency:", TColorpicker.Transparency
-        )
-    end)
-
-
-
-    local Keybind = Tabs.Main:AddKeybind("Keybind", {
-        Title = "KeyBind",
-        Mode = "Toggle", -- Always, Toggle, Hold
-        Default = "LeftControl", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
-
-        -- Occurs when the keybind is clicked, Value is `true`/`false`
-        Callback = function(Value)
-            print("Keybind clicked!", Value)
-        end,
-
-        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
-        ChangedCallback = function(New)
-            print("Keybind changed!", New)
-        end
-    })
-
-    -- OnClick is only fired when you press the keybind and the mode is Toggle
-    -- Otherwise, you will have to use Keybind:GetState()
-    Keybind:OnClick(function()
-        print("Keybind clicked:", Keybind:GetState())
-    end)
-
-    Keybind:OnChanged(function()
-        print("Keybind changed:", Keybind.Value)
-    end)
-
-    task.spawn(function()
-        while true do
-            wait(1)
-
-            -- example for checking if a keybind is being pressed
-            local state = Keybind:GetState()
-            if state then
-                print("Keybind is being held down")
-            end
-
-            if Fluent.Unloaded then break end
-        end
-    end)
-
-    Keybind:SetValue("MB2", "Toggle") -- Sets keybind to MB2, mode to Hold
-
-
-    local Input = Tabs.Main:AddInput("Input", {
-        Title = "Input",
-        Default = "Default",
-        Placeholder = "Placeholder",
-        Numeric = false, -- Only allows numbers
-        Finished = false, -- Only calls callback when you press enter
-        Callback = function(Value)
-            print("Input changed:", Value)
-        end
-    })
-
-    Input:OnChanged(function()
-        print("Input updated:", Input.Value)
-    end)
-end
-
-
--- Addons:
--- SaveManager (Allows you to have a configuration system)
--- InterfaceManager (Allows you to have a interface managment system)
-
--- Hand the library over to our managers
+-- SaveManager and InterfaceManager
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 
--- Ignore keys that are used by ThemeManager.
--- (we dont want configs to save themes, do we?)
 SaveManager:IgnoreThemeSettings()
-
--- You can add indexes of elements the save manager should ignore
 SaveManager:SetIgnoreIndexes({})
-
--- use case for doing it this way:
--- a script hub could have themes in a global folder
--- and game configs in a separate folder per game
 InterfaceManager:SetFolder("FluentScriptHub")
 SaveManager:SetFolder("FluentScriptHub/specific-game")
 
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
-
 
 Window:SelectTab(1)
 
@@ -328,6 +220,5 @@ Fluent:Notify({
     Duration = 8
 })
 
--- You can use the SaveManager:LoadAutoloadConfig() to load a config
--- which has been marked to be one that auto loads!
+-- Load autoload config if applicable
 SaveManager:LoadAutoloadConfig()
